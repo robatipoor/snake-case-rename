@@ -1,0 +1,15 @@
+[package]
+name = "snake-case-rename"
+description = "rename dirs and file snake case"
+homepage = "https://github.com/robatipoor/snake-case-rename"
+keywords = ["snake", "file","rename"]
+license = "MIT"
+repository = "https://github.com/robatipoor/snake-case-rename"
+version = "0.0.1"
+authors = ["Mahdi robatipoor <Mahdi.robatipoor@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+clap = "3.0.0-beta.2"
+lazy_static = "1.4.0"
+regex = "1.4.3"
