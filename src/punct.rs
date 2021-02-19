@@ -1,6 +1,7 @@
 use lazy_static::lazy_static;
 use regex::Regex;
 
+use crate::result::Result;
 use std::collections::VecDeque;
 use std::{fs, fs::DirEntry};
 
@@ -44,14 +45,19 @@ pub fn replace_punct_with_underscore(name: &str) -> String {
         count -= 1;
     }
     if len % 2 != 0 {
-        back.push_back(name.as_bytes()[mid] as char);
+        let f = name.as_bytes()[mid] as char;
+        if PUNCT.is_match(&f.to_string()) || f == ' ' {
+            back.push_back('_');
+        } else {
+            back.push_back(f);
+        }
     }
     let mut out = back.iter().collect::<String>();
     out.push_str(&front.iter().collect::<String>());
     out
 }
 
-pub fn read_current_dir() -> crate::Result<Vec<DirEntry>> {
+pub fn read_current_dir() -> Result<Vec<DirEntry>> {
     let files = fs::read_dir(".")?;
     Ok(files.into_iter().map(|f| f.unwrap()).collect())
 }
