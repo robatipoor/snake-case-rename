@@ -5,20 +5,12 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 snake-case-rename is command line tool for rename batch file snake case style and remove punctuation characters
-## This tool may have bug please use with caution 
+### ⚠️ This tool may have bug please use with caution ⚠️ 
+
+![alt-text](sample.gif)
 
 **install**
 
 ```sh
-cargo install snake-case-rename
-```
-
-**Build and install**
-
-```sh
-# dependencies git, rustc, cargo, gnu make, binutils, upx
-# build and install snake-case-rename 
-git clone https://github.com/robatipoor/snake-case-rename \
-&& cd snake-case-rename \
-&& make 
+cargo install --git https://github.com/robatipoor/snake-case-rename
 ```

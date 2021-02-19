@@ -30,7 +30,7 @@ fn run() -> crate::Result {
         let ext = get_extension_file(dir);
         let is_hiden = check_is_hiden(&name);
         let name = replace_punct_with_underscore(&name);
-        let mut new_name = create_name_file(&name, ext, is_hiden);
+        let new_name = create_name_file(&name, ext, is_hiden);
         let mut new_name = snake_case_convert(new_name);
         if dup.contains(&new_name) {
             new_name = format!("{:02}_{}", counter, new_name);

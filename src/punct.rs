@@ -33,7 +33,7 @@ pub fn replace_punct_with_underscore(name: &str) -> String {
             double_back_flag = false;
         }
         if PUNCT.is_match(&f.to_string()) || f == ' ' {
-            if front_flag && !double_front_flag {
+            if front_flag && !double_front_flag && back.len() > 1 {
                 front.push_front('_');
                 double_front_flag = true;
             }
@@ -46,8 +46,10 @@ pub fn replace_punct_with_underscore(name: &str) -> String {
     }
     if len % 2 != 0 {
         let f = name.as_bytes()[mid] as char;
-        if PUNCT.is_match(&f.to_string()) || f == ' ' {
-            back.push_back('_');
+        if PUNCT.is_match(&f.to_string()) || f == ' '{
+            if  back.len() > 1 {
+                back.push_back('_');
+            }
         } else {
             back.push_back(f);
         }
@@ -160,6 +162,13 @@ pub mod tests {
     }
 
     #[test]
+    pub fn replace_punct_with_underscore_test_12() {
+        let name_input = "@@@@@foo";
+        let name_output = replace_punct_with_underscore(name_input);
+        assert_eq!("foo", name_output);
+    }
+
+    #[test]
     pub fn snake_case_test1() {
         let name_input = "fooBar".to_string();
         let name_output = snake_case_convert(name_input);
@@ -188,9 +197,16 @@ pub mod tests {
     }
 
     #[test]
-    pub fn snake_case_test() {
+    pub fn snake_case_test5() {
         let name_input = "fooBAr".to_string();
         let name_output = snake_case_convert(name_input);
         assert_eq!("foo_bar", name_output);
+    }
+
+    #[test]
+    pub fn snake_case_test6() {
+        let name_input = "Foo".to_string();
+        let name_output = snake_case_convert(name_input);
+        assert_eq!("foo", name_output);
     }
 }
