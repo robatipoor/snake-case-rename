@@ -62,6 +62,23 @@ pub fn read_current_dir() -> Result<Vec<DirEntry>> {
     Ok(files.into_iter().map(|f| f.unwrap()).collect())
 }
 
+pub fn snake_case_convert(s: String) -> String {
+    let mut buf = Vec::<char>::new();
+    let mut cc = 0;
+    for (i, c) in s.chars().into_iter().enumerate() {
+        if c.is_uppercase() && i > 0 {
+            if let Some(s) = buf.get(i - 1 + cc) {
+                if s.is_lowercase() && *s != '_' {
+                    buf.push('_');
+                    cc += 1;
+                }
+            }
+        }
+        buf.push(c);
+    }
+    buf.iter().collect::<String>().to_lowercase()
+}
+
 #[cfg(test)]
 pub mod tests {
     use crate::punct::*;
@@ -133,5 +150,47 @@ pub mod tests {
         let name_input = "  book_eng_algo  -";
         let name_output = replace_punct_with_underscore(name_input);
         assert_eq!("book_eng_algo", name_output);
+    }
+
+    #[test]
+    pub fn replace_punct_with_underscore_test_11() {
+        let name_input = "foo$bar";
+        let name_output = replace_punct_with_underscore(name_input);
+        assert_eq!("foo_bar", name_output);
+    }
+
+    #[test]
+    pub fn snake_case_test1() {
+        let name_input = "fooBar".to_string();
+        let name_output = snake_case_convert(name_input);
+        assert_eq!("foo_bar", name_output);
+    }
+
+    #[test]
+    pub fn snake_case_test2() {
+        let name_input = "fooBarBAZR".to_string();
+        let name_output = snake_case_convert(name_input);
+        assert_eq!("foo_bar_bazr", name_output);
+    }
+
+    #[test]
+    pub fn snake_case_test3() {
+        let name_input = "fooBAR".to_string();
+        let name_output = snake_case_convert(name_input);
+        assert_eq!("foo_bar", name_output);
+    }
+
+    #[test]
+    pub fn snake_case_test4() {
+        let name_input = "fooBar".to_string();
+        let name_output = snake_case_convert(name_input);
+        assert_eq!("foo_bar", name_output);
+    }
+
+    #[test]
+    pub fn snake_case_test() {
+        let name_input = "fooBAr".to_string();
+        let name_output = snake_case_convert(name_input);
+        assert_eq!("foo_bar", name_output);
     }
 }
